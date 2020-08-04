@@ -1,0 +1,9 @@
+﻿@page
+@model IndexModel
+@{
+  ViewData["Title"] = "League Home";
+}
+
+<div class="jumbotron p-2 text-center">
+  <h2 class="display-3"><img src="/image/@(Model.League.LeagueId)/@(Model.League.LeagueId).png" />@Model.League.Name</h2>
+</div>

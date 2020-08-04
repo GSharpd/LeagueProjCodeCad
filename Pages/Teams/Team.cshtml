@@ -1,0 +1,51 @@
+﻿@page "{id}"
+@model TeamModel
+
+@{
+    ViewData["Title"] = "NFL Team -" + @Html.DisplayFor(model => model.Team.Name);
+}
+
+<div class="jumbotron p-2">
+    <h1 class="display-4">
+        <img src="/image/nfl/logo/@(Model.Team.TeamId).png" />
+        @Model.Team.Location
+        @Model.Team.Name
+    </h1>
+</div>
+
+<div class="d-flex justify-content-between pb-2">
+    <div>
+        <div>@Model.Team.Division.ConferenceId - @Model.Team.DivisionId</div>
+        <div>Record: @Model.Team.Win-@Model.Team.Loss-@Model.Team.Tie</div>
+        <hr />
+        <div>@Model.Team.Stadium Stadium</div>
+        <div>Capcity: @Model.Team.Capacity</div>
+        <hr />
+        <div class="pb-2">@Model.Team.City, @Model.Team.State @Model.Team.Zip</div>
+        <img src="/image/nfl/stadium/@(Model.Team.TeamId).jpg" />
+    </div>
+    <img src="/image/nfl/seating/@(Model.Team.TeamId).png" />
+</div>
+
+<section class="grid container">
+    <div class="d-flex bg-primary text-white">
+        <div class="p-1" style="flex:0 0 10%">Number</div>
+        <div class="p-1" style="flex:0 0 25%">Name</div>
+        <div class="p-1" style="flex:0 0 10%">Position</div>
+        <div class="p-1" style="flex:0 0 20%">Experience</div>
+        <div class="p-1" style="flex:0 0 25%">College</div>
+        <div class="p-1" style="flex:0 0 10%">Depth</div>
+    </div>
+
+    @foreach (Player Player in Model.Team.Players)
+    {
+        <a class="@(Player.Depth == 1 ? "d-flex starter" : "d-flex")" asp-page="/Players/Player" asp-route-id="@Player.PlayerId">
+            <div class="p-1" style="flex:0 0 10%">@Player.Number</div>
+            <div class="p-1" style="flex:0 0 25%">@Player.Name</div>
+            <div class="p-1" style="flex:0 0 10%">@Player.Position</div>
+            <div class="p-1" style="flex:0 0 20%">@Player.Experience</div>
+            <div class="p-1" style="flex:0 0 25%">@Player.College</div>
+            <div class="p-1" style="flex:0 0 10%">@Player.Depth</div>
+        </a>
+    }
+</section>

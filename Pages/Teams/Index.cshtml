@@ -1,0 +1,42 @@
+﻿@page
+@model IndexModel
+@using League.Models
+@{
+    ViewData["Title"] = "NFL Teams";
+}
+
+<div class="jumbotron p-2 d-flex justify-content-between">
+    <h2 class="display-3"><img src="/image/nfl/nfl.png" /> Teams 2019-2020</h2>
+    <form class="d-flex">
+        <div class="form-group pr-2">
+            <label class="col-form-label control-label" asp-for="FavoriteTeam">Favorite:</label>
+            <select class="form-control" asp-for="FavoriteTeam" asp-items="Model.AllTeams" onchange="this.form.submit();">
+                <option value="">None</option>
+            </select>
+        </div>
+    </form>
+</div>
+
+<section class="grid">
+    @foreach (Conference Conference in Model.Conferences)
+    {
+        <h4 class="p-2">@Conference.Name</h4>
+
+        @foreach (Division Division in Model.GetConferenceDivisions(Conference.ConferenceId))
+        {
+            <h5 class="bg-primary p-1 text-white">@Division.Name</h5>
+
+            @foreach (Team Team in Model.GetDivisionTeams(Division.DivisionId))
+            {
+                <a class="@(Team.TeamId == Model.FavoriteTeam ? "d-flex favorite p1" : "d-flex p1")" asp-page="./Team" asp-route-id="@Team.TeamId">
+                    <div style="flex: 0 0 25%">@Team.Location</div>
+                    <div style="flex: 0 0 25%">@Team.Name</div>
+                    <div style="flex: 0 0 5%">@Team.Win</div>
+                    <div style="flex: 0 0 5%">@Team.Loss</div>
+                    <div style="flex: 0 0 5%">@Team.Tie</div>
+                </a>
+            }
+        }
+    }
+</section>
+
